@@ -1,7 +1,9 @@
 #include <windows.h>
+#include <conio.h>
 #include <sql.h>
 #include <sqlext.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdlib>
 #include <iostream>
@@ -35,10 +37,30 @@ struct TableQuery {
 } // namespace
 
 int main() {
-    const char* connectionString = std::getenv("PERSONAL_UNI_ODBC");
-    if (connectionString == nullptr || *connectionString == '\0') {
-        std::cerr << "Define PERSONAL_UNI_ODBC con los datos de tu conexión psqlODBC.\n";
-        return 2;
+    const char* environmentConnectionString = std::getenv("PERSONAL_UNI_ODBC");
+    std::string connectionString =
+        environmentConnectionString == nullptr || *environmentConnectionString == '\0'
+            ? "Driver={PostgreSQL ODBC Driver(UNICODE)};"
+              "Server=127.0.0.1;Port=5432;Database=personal_uni;"
+            : environmentConnectionString;
+    if (environmentConnectionString == nullptr || *environmentConnectionString == '\0') {
+        std::string user;
+        std::cout << "Usuario PostgreSQL [postgres]: " << std::flush;
+        std::getline(std::cin, user);
+        if (user.empty()) user = "postgres";
+
+        std::string password;
+        std::cout << "Contraseña PostgreSQL (entrada oculta): " << std::flush;
+        for (int key = 0; (key = _getch()) != '\r' && key != '\n';) {
+            if (key == '\b') {
+                if (!password.empty()) password.pop_back();
+            } else if (key >= 32 && key <= 255) {
+                password.push_back(static_cast<char>(key));
+            }
+        }
+        std::cout << '\n';
+        connectionString += "Uid=" + user + ";Pwd=" + password + ";";
+        std::fill(password.begin(), password.end(), '\0');
     }
 
     SQLHENV environment = SQL_NULL_HENV;
@@ -64,11 +86,13 @@ int main() {
     SQLSMALLINT completedLength = 0;
     result = SQLDriverConnectA(
         connection, nullptr,
-        reinterpret_cast<SQLCHAR*>(const_cast<char*>(connectionString)),
+        reinterpret_cast<SQLCHAR*>(connectionString.data()),
         SQL_NTS, completedConnectionString.data(),
         static_cast<SQLSMALLINT>(completedConnectionString.size()),
-        &completedLength, SQL_DRIVER_NOPROMPT);
+        &completedLength, SQL_DRIVER_PROMPT);
     if (!succeeded(result)) {
+        std::cerr << "No se pudo conectar a personal_uni. Revisa PostgreSQL y "
+                     "los datos del cuadro de autenticación ODBC.\n";
         printDiagnostics(SQL_HANDLE_DBC, connection);
         SQLFreeHandle(SQL_HANDLE_DBC, connection);
         SQLFreeHandle(SQL_HANDLE_ENV, environment);
@@ -112,7 +136,7 @@ int main() {
             std::array<SQLCHAR, 256> columnName{};
             SQLSMALLINT nameLength = 0;
             SQLSMALLINT dataType = 0;
-            SQLULEN columnSize = 0;
+            SQLUINTEGER columnSize = 0;
             SQLSMALLINT decimalDigits = 0;
             SQLSMALLINT nullable = 0;
             result = SQLDescribeColA(statement, column, columnName.data(),
@@ -139,4 +163,3 @@ int main() {
     SQLFreeHandle(SQL_HANDLE_ENV, environment);
     return 0;
 }
-

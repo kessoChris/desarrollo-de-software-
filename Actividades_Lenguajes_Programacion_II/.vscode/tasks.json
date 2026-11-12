@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compilar empleados_odbc (GCC UCRT64)",
+      "type": "process",
+      "command": "C:/msys64/ucrt64/bin/g++.exe",
+      "args": [
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-DNOMINMAX",
+        "-DWIN32_LEAN_AND_MEAN",
+        "${workspaceFolder}/src/main.cpp",
+        "-lodbc32",
+        "-o",
+        "${workspaceFolder}/build/empleados_odbc.exe"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}" }
+      },
+      "problemMatcher": "$gcc",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      "label": "Ejecutar empleados_odbc",
+      "type": "process",
+      "command": "${workspaceFolder}/build/empleados_odbc.exe",
+      "dependsOn": "Compilar empleados_odbc (GCC UCRT64)",
+      "dependsOrder": "sequence",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}" }
+      },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared", "clear": false }
+    }
+  ]
+}
