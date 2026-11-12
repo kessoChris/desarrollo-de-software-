@@ -89,7 +89,7 @@ int main() {
         reinterpret_cast<SQLCHAR*>(connectionString.data()),
         SQL_NTS, completedConnectionString.data(),
         static_cast<SQLSMALLINT>(completedConnectionString.size()),
-        &completedLength, SQL_DRIVER_PROMPT);
+        &completedLength, SQL_DRIVER_NOPROMPT);
     if (!succeeded(result)) {
         std::cerr << "No se pudo conectar a personal_uni. Revisa PostgreSQL y "
                      "los datos del cuadro de autenticación ODBC.\n";
