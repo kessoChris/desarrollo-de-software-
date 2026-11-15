@@ -1,0 +1,22 @@
+REPORTE GENERAL DE EMPLEADOS
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| Número | Nombre completo        | Nacimiento | RFC           | Nombre del centro      | Descripción del puesto      | Directivo |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| 1      | Jesús Vega Castro      | 26/03/1988 | VECJ880326XXX | Tiendas Ángel Flores   | Coordina personal,          | Sí        |
+|        |                        |            |               | Ropa                   | operación y resultados de   |           |
+|        |                        |            |               |                        | la tienda.                  |           |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| 2      | José López Pérez       | 01/01/1980 | LOPJ800101XXX | Tiendas Ángel Flores   | Atiende clientes y registra | No        |
+|        |                        |            |               | Muebles                | las ventas de su área.      |           |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| 3      | María García Torres    | 14/07/1992 | GATM920714XXX | Tiendas Ángel Flores   | Realiza cobros, cortes y    | No        |
+|        |                        |            |               | Cajas                  | control de caja.            |           |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| 4      | Luis Hernández Ramos   | 02/11/1990 | HERL901102XXX | La Primavera Ropa      | Apoya el registro y         | No        |
+|        |                        |            |               |                        | seguimiento administrativo. |           |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+| 5      | Ana Sofía López Cruz   | 19/05/1995 | LOCA950519XXX | La Primavera Muebles   | Supervisa centros de        | Sí        |
+|        |                        |            |               |                        | trabajo y coordina a sus    |           |
+|        |                        |            |               |                        | gerentes.                   |           |
++--------+------------------------+------------+---------------+------------------------+-----------------------------+-----------+
+Filas: 5

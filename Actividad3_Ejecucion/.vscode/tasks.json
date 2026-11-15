@@ -1,0 +1,60 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compilar Actividad 3",
+      "type": "process",
+      "command": "C:/msys64/ucrt64/bin/g++.exe",
+      "args": [
+        "-std=c++17",
+        "-static",
+        "-Wall",
+        "-Wextra",
+        "-DNOMINMAX",
+        "-DWIN32_LEAN_AND_MEAN",
+        "${workspaceFolder}/src/main.cpp",
+        "-lodbc32",
+        "-o",
+        "${workspaceFolder}/build/empleados_odbc.exe"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Ejecutar Actividad 3 con datos A1",
+      "type": "process",
+      "command": "${workspaceFolder}/build/empleados_odbc.exe",
+      "dependsOn": "Compilar Actividad 3",
+      "dependsOrder": "sequence",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": false
+      },
+      "args": [
+        "--cargar-a1"
+      ]
+    }
+  ]
+}
